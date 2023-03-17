@@ -1,52 +1,64 @@
-const userSelect = document.getElementById('user');
-const stages = document.querySelectorAll('.stage');
+const userSelect = document.getElementById("user");
+const stages = document.querySelectorAll(".stage");
 
-document.addEventListener('DOMContentLoaded', () => {
+var data = getData();
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateUserTracker();
+
+  userSelect.addEventListener("change", () => {
     updateUserTracker();
+  });
 
-    userSelect.addEventListener('change', () => {
-        updateUserTracker();
+  stages.forEach((stage, index) => {
+    stage.addEventListener("click", () => {
+      updateTracker(index);
     });
-
-    stages.forEach((stage, index) => {
-        stage.addEventListener('click', () => {
-            updateTracker(index);
-        });
-    });
+  });
 });
 
 function updateUserTracker() {
-    const userStatus = getUserStatus();
-    stages.forEach((stage, i) => {
-        if (i <= userStatus) {
-            stage.classList.add('stage-active');
-        } else {
-            stage.classList.remove('stage-active');
-        }
-    });
+  const userStatus = getUserStatus();
+  stages.forEach((stage, i) => {
+    if (i == userStatus) {
+      stage.classList.add("stage-active");
+    } else {
+      stage.classList.remove("stage-active");
+    }
+  });
 }
 
 function updateTracker(index) {
-    const stages = document.querySelectorAll('.stage');
-    const clickedStage = stages[index];
+  const stages = document.querySelectorAll(".stage");
+  const clickedStage = stages[index];
 
-    if (clickedStage.classList.contains('stage-active')) {
-        setUserStatus(index - 1);
-    } else {
-        setUserStatus(index);
-    }
+  if (clickedStage.classList.contains("stage-active")) {
+    setUserStatus(index - 1);
+  } else {
+    setUserStatus(index);
+  }
 
-    updateUserTracker();
+  updateUserTracker();
 }
 
 function getUserStatus() {
-    const userKey = userSelect.value;
-    const userData = JSON.parse(localStorage.getItem(userKey));
-    return userData ? userData.status : -1;
+  const userKey = userSelect.value;
+  const userData = JSON.parse(localStorage.getItem(userKey));
+  return userData ? userData.status : -1;
 }
 
 function setUserStatus(status) {
-    const userKey = userSelect.value;
-    const userData = { status };
-    localStorage.setItem(userKey, JSON.stringify(userData));
+  const userKey = userSelect.value;
+  const userData = { status };
+  localStorage.setItem(userKey, JSON.stringify(userData));
+}
+
+function getData() {
+  fetch("./data.json")
+    .then((response) => response.json())
+    .then((data) => {
+      // 'data' is now a JavaScript array containing the JSON data
+      console.log(data);
+    })
+    .catch((error) => console.error(error));
 }
