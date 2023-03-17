@@ -3,6 +3,7 @@ const stages = document.querySelectorAll(".stage");
 
 var data = getData();
 
+setUserDropdown(data);
 document.addEventListener("DOMContentLoaded", () => {
   updateUserTracker();
 
@@ -17,6 +18,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+function setUserDropdown(data) {
+  var str;
+
+  for (var i = 0; i < length(data); i++) {
+    str += '<option value="user';
+    str += i + 1 + ">" + data[i].name + "</option>";
+  }
+  document.getElementById("user").setInnerHTML(str);
+}
 function updateUserTracker() {
   const userStatus = getUserStatus();
   stages.forEach((stage, i) => {
