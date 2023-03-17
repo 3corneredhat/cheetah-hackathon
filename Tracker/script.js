@@ -1,9 +1,12 @@
+"use strict";
 const userSelect = document.getElementById("user");
 const stages = document.querySelectorAll(".stage");
 
-var data = getData();
+// var d = getData();
 
-setUserDropdown(data);
+// console.log(d);
+// setUserDropdown(d);
+
 document.addEventListener("DOMContentLoaded", () => {
   updateUserTracker();
 
@@ -18,15 +21,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function setUserDropdown(data) {
-  var str;
+// function setUserDropdown(d) {
+//   var str = "";
 
-  for (var i = 0; i < length(data); i++) {
-    str += '<option value="user';
-    str += i + 1 + ">" + data[i].name + "</option>";
-  }
-  document.getElementById("user").setInnerHTML(str);
-}
+//   for (var i = 0; i < d.length; i++) {
+//     str += '<option value="user';
+//     str += i + 1 + '">' + d[i].name + "</option>";
+//   }
+//   document.getElementById("user").innerHTML = str;
+// }
+
 function updateUserTracker() {
   const userStatus = getUserStatus();
   stages.forEach((stage, i) => {
